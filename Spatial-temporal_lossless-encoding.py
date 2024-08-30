@@ -2,37 +2,37 @@
 
 def encode_numbers(numbers):
     """
-    编码函数接口
-    :param numbers: 代编码的多个整数的列表
-    :return: 编码后的结果（1个整数）
+    Encoding function interface
+    :param numbers: A list of integers to be encoded
+    :return: Encoded result (a single integer)
     """
     sorted_numbers = sorted(numbers)
     
-    # 针对零时进行的补丁修正
+    # Patch correction for handling zero
     sorted_numbers = [i + 1 for i in sorted_numbers]
     binary_string = ""
     for num in sorted_numbers:
-        binary = bin(num - 1)[2:]  # 将数字转换为二进制形式，去掉前缀 '0b'
-        binary = binary.zfill(5)  # 左侧补零，使其长度为 5
+        binary = bin(num - 1)[2:]  # Convert number to binary, removing the '0b' prefix
+        binary = binary.zfill(5)  # Pad with zeros on the left to make the length 5
         binary_string += binary
-    encoded = int(binary_string, 2)  # 将二进制串转换为十进制数
+    encoded = int(binary_string, 2)  # Convert the binary string to a decimal number
     return encoded
 
 
 def decode_numbers(encoded, n):
-    binary_string = bin(encoded)[2:].zfill(5 * n)  # 将十进制数转换为二进制串，左侧补零
+    binary_string = bin(encoded)[2:].zfill(5 * n)  # Convert the decimal number to a binary string, padding with zeros on the left
     decoded_numbers = []
     for i in range(n):
-        binary = binary_string[i * 5: (i + 1) * 5]  # 每 5 位进行分组
-        number = int(binary, 2) + 1  # 将二进制串转换为十进制数，加上 1 得到原来的数字
+        binary = binary_string[i * 5: (i + 1) * 5]  # Group every 5 bits
+        number = int(binary, 2) + 1  # Convert the binary string to a decimal number and add 1 to get the original number
         decoded_numbers.append(number)
 
-    # 针对零时进行的补丁修正
+    # Patch correction for handling zero
     decoded_numbers = [i - 1 for i in decoded_numbers]
     return decoded_numbers
 
 
-# 示例用法
+# Example usage
 numbers = [8, 9, 15, 20, 3]
 n = len(numbers)
 encoded_number = encode_numbers(numbers)
